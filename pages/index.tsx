@@ -3,12 +3,13 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Fragment, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
+import AOS from 'aos'
 
 const Home: NextPage = () => {
   useEffect(() => {
     AOS.init();
   }, []);
-  return (
+  return (  
     <>
       <section>
         <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white pt-lg-40 pb-lg-40 pt-30 pb-50">
