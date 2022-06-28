@@ -27,7 +27,8 @@ export default function FeaturedGame() {
             {gameList.map((item: GameItemTypes) => {
               return (
                 <GameItem 
-                  key={item._id} 
+                  key={item._id}
+                  id={item._id} 
                   title={item.name} 
                   category={item.category.name} 
                   thumbnail={`${BASE_IMG}/${item.thumbnail}`}
