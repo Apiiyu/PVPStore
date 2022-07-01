@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import SignInForm from "../components/organisms/Pages/Authentication/SignInForm"
+import SignUpForm from "components/organisms/Pages/Authentication/SignUpForm"
 
 export default function SignUp() {
   return (
@@ -16,7 +16,7 @@ export default function SignUp() {
               </Link>
             </div>
             
-            <SignInForm />
+            <SignUpForm />
           </form>
         </div>
       </section>

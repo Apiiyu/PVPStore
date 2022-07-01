@@ -1,4 +1,4 @@
-import React from 'react'
+import Link from "next/link"
 
 export default function SignUpSuccess() {
   return (
@@ -115,9 +115,10 @@ export default function SignUpSuccess() {
                         dan menjadi pemenang!</p>
                 </div>
                 <div className="button-group d-flex flex-column mx-auto">
-                    <a className="btn btn-top-up fw-medium text-lg text-white rounded-pill" href="../index.html"
-                        role="button">Top
-                        Up</a>
+                  <Link href="/">
+                    <a className="btn btn-top-up fw-medium text-lg text-white rounded-pill"
+                        role="button">Top Up</a>
+                  </Link>
                 </div>
             </div>
         </section>

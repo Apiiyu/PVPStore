@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import SignInForm from '../components/organisms/Pages/Authentication/SignInForm'
+import SignInForm from 'components/organisms/Pages/Authentication/SignInForm'
 
 export default function SignIn() {
   return (

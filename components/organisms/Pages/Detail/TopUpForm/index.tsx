@@ -51,7 +51,7 @@ export default function TopUpForm (props: TopUpFormProps) {
               placeholder="Enter your Bank Account Name" />
       </div>
       <div className="d-sm-block d-flex flex-column w-100">
-          <a href="./checkout" type="submit"
+          <a href="/checkout" type="submit"
               className="btn btn-submit rounded-pill fw-medium text-white border-0 text-lg">Continue</a>
       </div>
   </form>

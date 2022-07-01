@@ -3,8 +3,16 @@ import CheckoutItem from '../components/organisms/Pages/Checkout/CheckoutItem'
 import CheckoutDetail from '../components/organisms/Pages/Checkout/CheckoutDetail'
 import CheckoutConfirmation from '../components/organisms/Pages/Checkout/CheckoutConfirmation'
 import Image from 'next/image'
+import jwtDecode from 'jwt-decode'
+import { JWTPayloadTypes, UserTypes } from 'services/players/data-types'
 
-function checkout() {
+interface CheckoutProps {
+  userData: UserTypes
+}
+
+export default function checkout(props: CheckoutProps) {
+  const {userData} = props
+
   return <>
     <section className="checkout mx-auto pt-md-100 pb-md-145 pt-30 pb-30">
         <div className="container-fluid">
@@ -26,4 +34,27 @@ function checkout() {
   </>
 }
 
-export default checkout
+// --> Logic SSR (Server Side Rendering)
+export const getServerSideProps = async ({req}) => {
+  const { access_token } = req.cookies
+  if(!access_token) {
+    return {
+      redirect: {
+        destination: '/sign-in',
+        permanent: false,
+      }
+    }
+  } else {  
+    const jwtToken = Buffer.from(access_token, 'base64').toString('ascii') // --> Convert base64 to original jwt, (use in SSR, if in Client using function atob)
+    const payload:JWTPayloadTypes = jwtDecode(jwtToken)
+    const userData:UserTypes = payload.data
+    const BASE_IMG = process.env.NEXT_PUBLIC_BASE_IMG
+    userData.avatar = `${BASE_IMG}/players/${userData.avatar}`
+    
+    return {
+      props: {
+        userData
+      }
+    }
+  }
+}
