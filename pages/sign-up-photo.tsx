@@ -3,8 +3,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { setSignUp } from 'services/authentication/auth'
 import { getGameCategory } from 'services/players'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify'
 
 export default function SignUpFoto() {
   const [category, setCategory] = useState([])
@@ -102,8 +101,6 @@ export default function SignUpFoto() {
             </div>
           </form>
         </div>
-
-        <ToastContainer />
       </section>
     </>
   )

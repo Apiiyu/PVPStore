@@ -2,9 +2,8 @@ import classNames from "classnames"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import { setSignIn } from "services/authentication/auth"
+import { toast } from "react-toastify"
 import Cookies from 'js-cookie'
 
 export default function SignInForm() {

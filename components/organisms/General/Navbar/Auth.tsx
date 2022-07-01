@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
 import { JWTPayloadTypes, UserTypes } from 'services/players/data-types';
 import { useRouter } from 'next/router';
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(false)
@@ -71,8 +71,6 @@ export default function Auth() {
               </li>
           </ul>
       </div>
-
-      <ToastContainer />
     </li>
     )
   }
