@@ -5,6 +5,7 @@ import CheckoutConfirmation from '../components/organisms/Pages/Checkout/Checkou
 import Image from 'next/image'
 import jwtDecode from 'jwt-decode'
 import { JWTPayloadTypes, UserTypes } from 'services/players/data-types'
+import { GetServerSideProps } from 'next'
 
 interface CheckoutProps {
   userData: UserTypes
@@ -35,7 +36,7 @@ export default function checkout(props: CheckoutProps) {
 }
 
 // --> Logic SSR (Server Side Rendering)
-export const getServerSideProps = async ({req}) => {
+export const getServerSideProps = async ({req}: GetServerSideProps) => {
   const { access_token } = req.cookies
   if(!access_token) {
     return {

@@ -68,7 +68,6 @@ export default function SignInForm() {
                role="button">Sign Up</a>
           </Link>
       </div>
-      <ToastContainer />
     </>
   )
 }

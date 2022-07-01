@@ -52,3 +52,11 @@ export interface CheckoutTypes {
   name: string,
   accountUser: string,
 }
+
+export interface GetServerSideProps {
+  req: {
+    cookies: {
+      access_token: string,
+    }
+  }
+}
