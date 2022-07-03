@@ -1,39 +1,22 @@
-import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
-import Footer from '../../components/organisms/General/Footer'
-import Navbar from '../../components/organisms/General/Navbar'
-import TopUpForm from '../../components/organisms/Pages/Detail/TopUpForm'
-import TopUpItem from '../../components/organisms/Pages/Detail/TopUpItem'
-import { getDetailVoucher } from '../../services/players'
+import { useEffect } from 'react'
+import Footer from 'components/organisms/General/Footer'
+import Navbar from 'components/organisms/General/Navbar'
+import TopUpForm from 'components/organisms/Pages/Detail/TopUpForm'
+import TopUpItem from 'components/organisms/Pages/Detail/TopUpItem'
+import { getDetailVoucher, getFeaturedGame } from 'services/players'
+import { GameItemTypes, NominalsTypes, PaymentTypes } from 'data-types'
 
-export default function index() {
-  const { query, isReady } = useRouter()
-  const [ dataItem, setDataItem ] = useState({
-    name: '',
-    thumbnail: '',
-    category: {
-      name: ''
-    }
-  })
+interface DetailProps {
+  dataItem: GameItemTypes
+  nominals: NominalsTypes[]
+  payments: PaymentTypes[]
+}
 
-  const [ nominals, setNominals ] = useState([])
-  const [ payments, setPayments ] = useState([])
-
-  const getData = useCallback(async (id) => {
-    const data = await getDetailVoucher(id)
-    setDataItem(data)
-    localStorage.setItem('data-item', JSON.stringify(data))
-    setNominals(data.nominals)
-    setPayments(data.payments)
-  }, [getDetailVoucher])
-
+export default function Detail({dataItem, nominals, payments}: DetailProps) {
   useEffect(() => {
-    if(isReady) {
-      getData(query.id)
-    } else {
-      console.log("DOM HTML isn't 100 ready/rendered ")
-    }
-  }, [isReady])
+    localStorage.setItem('data-item', JSON.stringify(dataItem))
+  }, [])
+
   return (
     <>
     <Navbar />
@@ -58,4 +41,41 @@ export default function index() {
     <Footer />
     </>
   )
+}
+
+export const getStaticPaths = async () => {
+  const data = await getFeaturedGame()
+  const paths = data.map((item: GameItemTypes) => {
+    return {
+      params: {
+        id: item._id
+      }
+    }
+  })
+
+  console.log({paths})
+
+  return {
+    paths, // --> List item page
+    fallback: false
+  }
+}
+
+interface GetStaticProps {
+  params: {
+    id: string
+  }
+}
+
+export const getStaticProps = async ({params}: GetStaticProps) => { // --> Should use if we have getStaticPaths
+  const { id } = params
+  const data = await getDetailVoucher(id)
+  console.log({data})
+  return {
+    props: {
+      dataItem: data,
+      nominals: data.nominals,
+      payments: data.payments
+    }
+  }
 }

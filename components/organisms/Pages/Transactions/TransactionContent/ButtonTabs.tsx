@@ -2,16 +2,17 @@ import classNames from "classnames"
 
 interface ButtonTabsProps {
   title: string,
-  active?: boolean
+  active?: boolean,
+  onClick: () => void,
 }
 
 export default function ButtonTabs(props: ButtonTabsProps) {
-  const {title, active} = props
+  const {title, active, onClick} = props
   const classButton = classNames({
     'btn btn-status rounded-pill text-sm me-3': true,
     'btn-active': active
   })
   return (
-    <a data-filter="*" href="#" className={classButton}>{title}</a>
+    <button type="button" onClick={onClick} className={classButton}>{title}</button>
   )
 }

@@ -1,9 +1,8 @@
 import jwtDecode from 'jwt-decode'
-import { GetServerSideProps } from 'next'
 import React from 'react'
-import { JWTPayloadTypes, UserTypes } from 'services/players/data-types'
-import Sidebar from '../../components/organisms/General/Sidebar'
-import ContentOverview from '../../components/organisms/Pages/Member/ContentOverview'
+import { GetServerSideProps, JWTPayloadTypes, UserTypes } from 'data-types'
+import Sidebar from 'components/organisms/General/Sidebar'
+import ContentOverview from 'components/organisms/Pages/Member/ContentOverview'
 
 export default function Member() {
   return (

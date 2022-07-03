@@ -1,4 +1,6 @@
-export interface InputProps {
+import { InputHTMLAttributes } from "react"
+
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string,
   htmlFor?: string,
   inputType: 'text' | 'number' | 'email' | 'tel' | 'password' | 'date' | 'time' | 'datetime-local' | 'month' | 'week' | 'url' | 'search' | 'color' | 'file' | 'range' | 'checkbox' | 'radio' | 'submit' | 'reset' | 'button' | 'image' | 'hidden' | 'textarea',

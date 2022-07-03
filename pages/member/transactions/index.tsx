@@ -1,6 +1,8 @@
+import jwtDecode from 'jwt-decode'
 import React from 'react'
-import Sidebar from '../../../components/organisms/General/Sidebar'
-import TransactionContent from '../../../components/organisms/Pages/Transactions/TransactionContent'
+import { GetServerSideProps } from 'data-types'
+import Sidebar from 'components/organisms/General/Sidebar'
+import TransactionContent from 'components/organisms/Pages/Transactions/TransactionContent'
 
 export default function Transactions() {
   return (
@@ -11,4 +13,21 @@ export default function Transactions() {
       </section>
     </>
   )
+}
+
+// --> Logic SSR (Server Side Rendering)
+export const getServerSideProps = async ({ req }: GetServerSideProps) => {
+  const { access_token } = req.cookies
+  if(!access_token) {
+    return {
+      redirect: {
+        destination: '/sign-in',
+        permanent: false,
+      }
+    }
+  } else {  
+    return {
+      props: {}
+    }
+  }
 }

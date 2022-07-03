@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import GameItem from "components/molecules/GameItem"
 import { getFeaturedGame } from "services/players"
-import { GameItemTypes } from "services/players/data-types"
+import { GameItemTypes } from "data-types"
 
 export default function FeaturedGame() {
   const [gameList, setGameList] = useState([])

@@ -4,11 +4,12 @@ import { useCallback, useEffect, useState } from 'react'
 import { setSignUp } from 'services/authentication/auth'
 import { getGameCategory } from 'services/players'
 import { toast } from 'react-toastify'
+import { CategoryTypes } from 'data-types'
 
 export default function SignUpFoto() {
   const [category, setCategory] = useState([])
   const [favorite, setFavorite] = useState('')
-  const [avatar, setAvatar] = useState('')
+  const [avatar, setAvatar] = useState<any>('')
   const [avatarPreview, setAvatarPreview] = useState('')
   const [localForm, setLocalForm] = useState({
     name: '',
@@ -19,7 +20,6 @@ export default function SignUpFoto() {
 
   const getData = useCallback(async () => {
     const data = await getGameCategory()
-    console.log({data})
     setCategory(data)
   }, [getGameCategory])
 
@@ -72,8 +72,7 @@ export default function SignUpFoto() {
                       }
                     </label>
                     <input id="avatar" type="file" name="avatar" accept="image/png, image/jpeg" onChange={(event) => {
-                      console.log(event.target.files)
-                      const image = event.target.files[0]
+                      const image = event.target.files![0]
                       setAvatarPreview(URL.createObjectURL(image))
                       return setAvatar(image)
                     }}  />
@@ -85,7 +84,7 @@ export default function SignUpFoto() {
                   <label htmlFor="category" className="form-label text-lg fw-medium color-palette-1 mb-10">Favorite Game</label>
                   <select id="category" value={favorite} onChange={(event) => setFavorite(event.target.value)} name="category" className="form-select d-block w-100 rounded-pill text-lg" aria-label="Favorite Game">
                     <option value="" disabled selected>Select Category</option>
-                    { category.map(item => {
+                    { category.map((item: CategoryTypes) => {
                       return <option key={item._id} value={item._id}>{item.name}</option>
                     }) }
                   </select>

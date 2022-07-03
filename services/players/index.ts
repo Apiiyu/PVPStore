@@ -1,6 +1,6 @@
 import axios from "axios"
 import { callAPI } from "config/api"
-import { CheckoutTypes } from "./data-types"
+import { CheckoutTypes } from "data-types"
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 const API_VERSION = 'api/v1'

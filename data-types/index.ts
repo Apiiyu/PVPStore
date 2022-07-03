@@ -37,7 +37,9 @@ export interface UserTypes {
   name: string,
   email: string,
   password: string,
-  avatar: string
+  phone: string,
+  avatar: string,
+  phoneNumber: string
 }
 
 export interface JWTPayloadTypes {
@@ -58,5 +60,43 @@ export interface GetServerSideProps {
     cookies: {
       access_token: string,
     }
+  },
+  params: {
+    trxID: string
   }
+}
+
+export interface historyVoucherTopUpTypes {
+  _id: string,
+  category: string,
+  coinName: string,
+  coinQuantity: number,
+  gameName: string,
+  price: number,
+  thumbnail: string
+}
+
+export interface TopUpCategoriesTypes {
+  _id: string,
+  name: string,
+  value: number,
+}
+
+export interface HistoryPaymentTypes {
+  accountNumber: string,
+  bankName: string,
+  name: string,
+  type: string
+}
+
+export interface HistoryTransactionTypes {
+  _id: string,
+  name: string,
+  accountUser: string,
+  historyPayment: HistoryPaymentTypes
+  historyVoucherTopUp: historyVoucherTopUpTypes,
+  value: number,
+  status: string,
+  tax: number,
+  total: number,
 }

@@ -1,8 +1,29 @@
-import React from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import { getMemberOverview } from 'services/member'
+import { HistoryTransactionTypes, TopUpCategoriesTypes } from 'data-types'
 import Category from './Category'
 import TableRow from './TableRow'
 
 export default function ContentOverview() {
+  const [count, setCount] = useState([])
+  const [data, setData] = useState([])
+
+  const getData = useCallback( async () => {
+    const result = await getMemberOverview()
+      if(result.error) {
+        toast.error(result.message)
+      } else {
+        setCount(result.data.counts)
+        setData(result.data.history)
+      }
+  }, [])
+
+  useEffect( () => {
+    getData()
+  }, [])
+
+  const BASE_IMG = process.env.NEXT_PUBLIC_BASE_IMG
   return (
     <main className="main-wrapper">
       <div className="ps-lg-0">
@@ -11,17 +32,13 @@ export default function ContentOverview() {
               <p className="text-lg fw-medium color-palette-1 mb-14">Top Up Categories</p>
               <div className="main-content">
                   <div className="row">
-                    <Category nominal={18000500} icon="ic-desktop"> 
-                      Game <br /> Desktop
-                    </Category>
-
-                    <Category nominal={8455000} icon="ic-mobile"> 
-                      Game <br /> Mobile
-                    </Category>
-
-                    <Category nominal={5000000} icon="ic-desktop"> 
-                      Others <br /> Categories
-                    </Category>
+                    {count.map((item: TopUpCategoriesTypes) => {
+                      return (
+                        <Category key={item._id} nominal={item.value} icon="ic-desktop"> 
+                          {item.name}
+                        </Category>
+                      )
+                    })}
                   </div>
               </div>
           </div>
@@ -38,10 +55,18 @@ export default function ContentOverview() {
                           </tr>
                       </thead>
                       <tbody>
-                        <TableRow title="Mobile Legends" category='Desktop' item={200} price={290000} status="Pending" image='overview-1'/>
-                        <TableRow title='Call of Duty:Modern' category='Desktop' item={550} price={740000} status="Success" image='overview-2'/>
-                        <TableRow title='Clash of Clansh' category='Mobile' item={100} price={120000} status="Failed" image='overview-3'/>
-                        <TableRow title='The Royal Game' category='Mobile' item={225} price={200000} status="Pending" image='overview-3'/>
+                        {data.map((item: HistoryTransactionTypes) => {
+                          return (
+                            <TableRow 
+                              key={item._id}
+                              title={item.historyVoucherTopUp.gameName} 
+                              category={item.historyVoucherTopUp.category} 
+                              item={item.historyVoucherTopUp.coinQuantity} 
+                              price={item.historyVoucherTopUp.price} 
+                              status={item.status} 
+                              image={`${BASE_IMG}/${item.historyVoucherTopUp.thumbnail}`}/>
+                          )
+                        })}
                       </tbody>
                   </table>
               </div>

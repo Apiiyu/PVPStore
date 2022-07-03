@@ -1,22 +1,51 @@
-import React from 'react'
+import { HistoryTransactionTypes } from 'data-types'
+import React, { useCallback, useEffect, useState } from 'react'
+import NumberFormat from 'react-number-format'
+import { toast } from 'react-toastify'
+import { getMemberTransactions } from 'services/member'
 import ButtonTabs from './ButtonTabs'
 import TableRow from './TableRow'
 
 export default function TransactionContent() {
+  const [historyTransactions, setHistoryTransactions] = useState([])
+  const [totalTransactions, setTotalTransactions] = useState(0)
+  const [tab, setTab] = useState('all')
+  const BASE_IMG = process.env.NEXT_PUBLIC_BASE_IMG
+
+  const getData = useCallback(async (value) => {
+    const result = await getMemberTransactions(value)
+      if(result.error) {
+          toast.error(result.message)
+        } else {
+          setHistoryTransactions(result.data.history)
+          setTotalTransactions(result.data.total)
+        }
+  }, [])
+
+  useEffect(() => {
+    getData(tab)
+  }, [])
+
+  const onTabClick = (value: string) => {
+    setTab(value)
+    getData(value)
+  }
+
   return (
     <main className="main-wrapper">
       <div className="ps-lg-0">
           <h2 className="text-4xl fw-bold color-palette-1 mb-30">My Transactions</h2>
           <div className="mb-30">
               <p className="text-lg color-palette-2 mb-12">You’ve spent</p>
-              <h3 className="text-5xl fw-medium color-palette-1">Rp 4.518.000.500</h3>
+              <NumberFormat value={totalTransactions} className="text-5xl fw-medium color-palette-1" prefix="Rp. " displayType="text" thousandSeparator="." decimalSeparator=","/>
           </div>
           <div className="row mt-30 mb-20">
               <div className="col-lg-12 col-12 main-content">
                   <div id="list_status_title">
-                    <ButtonTabs title="All Trx" active={true} />
-                    <ButtonTabs title="Success" />
-                    <ButtonTabs title="Pending" />
+                    <ButtonTabs title="All Trx" active={tab === 'all'} onClick={() => onTabClick('all')} />
+                    <ButtonTabs title="Success" active={tab === 'Success'} onClick={() => onTabClick('Success')} />
+                    <ButtonTabs title="Pending" active={tab ==='Pending'} onClick={() => onTabClick('Pending')} />
+                    <ButtonTabs title="Failed" active={tab ==='Failed'} onClick={() => onTabClick('Failed')} />
                   </div>
               </div>
           </div>
@@ -34,10 +63,20 @@ export default function TransactionContent() {
                           </tr>
                       </thead>
                       <tbody id="list_status_item">
-                        <TableRow image='overview-1' title="Mobile Legends: The New Battle 2022" category='Desktop' item={200} price={290000} status="Pending" />
-                        <TableRow image='overview-2' title="Call of Duty:Modern" category='Desktop' item={550} price={740000} status="Success" />
-                        <TableRow image='overview-3' title="Clash of Clans" category='Mobile' item={100} price={120000} status="Failed" />
-                        <TableRow image='overview-4' title="The Royal Game" category='Mobile' item={225} price={200000} status="Pending" />
+                        {historyTransactions.map((item: HistoryTransactionTypes) => {
+                          return (
+                            <TableRow 
+                              key={item._id} 
+                              trxID={item._id}
+                              image={`${BASE_IMG}/${item.historyVoucherTopUp.thumbnail}`} 
+                              title={item.historyVoucherTopUp.gameName} 
+                              category={item.historyVoucherTopUp.category} 
+                              item={item.historyVoucherTopUp.coinQuantity} 
+                              price={item.historyVoucherTopUp.price} 
+                              status={item.status} 
+                            />
+                          )
+                        })}
                       </tbody>
                   </table>
               </div>

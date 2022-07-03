@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
-import { BankTypes, NominalsTypes, PaymentTypes } from "services/players/data-types"
+import { BankTypes, NominalsTypes, PaymentTypes } from "data-types"
 import NominalItem from "./NominalItem"
 import PaymentMethod from "./PaymentMethod"
 import { toast } from 'react-toastify'
@@ -49,7 +49,7 @@ export default function TopUpForm (props: TopUpFormProps) {
   }
 
   return (
-    <form action="./checkout.html" method="POST">
+    <>
       <div className="pt-md-50 pt-30">
           <div className="">
               <label htmlFor="ID" className="form-label text-lg fw-medium color-palette-1 mb-10">Verify
@@ -92,6 +92,6 @@ export default function TopUpForm (props: TopUpFormProps) {
           <button type="button" className="btn btn-submit rounded-pill fw-medium text-white border-0 text-lg"
           onClick={onSubmit}>Continue</button>
       </div>
-  </form>
+  </>
   )
 }

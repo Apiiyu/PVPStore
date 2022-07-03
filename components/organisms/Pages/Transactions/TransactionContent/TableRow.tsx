@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import Link from "next/link"
+import NumberFormat from "react-number-format"
 
 interface TableRowProps {
   image: string,
@@ -7,11 +8,12 @@ interface TableRowProps {
   category: string,
   item: number,
   price: number,
-  status: 'Pending' | 'Success' | 'Failed',
+  status: string,
+  trxID: string,
 }
 
 export default function TableRow(props: TableRowProps) {
-  const {image, title, category, item, price, status} = props
+  const {image, title, category, item, price, status, trxID} = props
   const classStatus = classNames({
     'float-start icon-status' : true,
     'pending' : status === 'Pending',
@@ -21,7 +23,7 @@ export default function TableRow(props: TableRowProps) {
   return (
     <tr data-category="pending" className="align-middle">
       <th scope="row">
-        <img className="float-start me-3 mb-lg-0 mb-3" src={`/img/${image}.png`}
+        <img className="float-start me-3 mb-lg-0 mb-3" src={image}
             width="80" height="60" alt="" />
         <div className="game-title-header">
             <p className="game-title fw-medium text-start color-palette-1 m-0">{title}</p>
@@ -32,7 +34,7 @@ export default function TableRow(props: TableRowProps) {
           <p className="fw-medium color-palette-1 m-0">{item} Gold</p>
       </td>
       <td>
-          <p className="fw-medium color-palette-1 m-0">{price}</p>
+        <NumberFormat className="fw-medium color-palette-1 m-0" value={price} prefix="Rp. " displayType="text" thousandSeparator="." decimalSeparator=","/>
       </td>
       <td>
           <div>
@@ -41,7 +43,7 @@ export default function TableRow(props: TableRowProps) {
           </div>
       </td>
       <td>
-        <Link href="/member/transactions/detail">
+        <Link href={`/member/transactions/${trxID}`}>
           <a className="btn btn-status rounded-pill text-sm">Details</a>
         </Link>
       </td>

@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Reached() {
   return (
     <section className="reached pt-50 pb-50">

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
-import { JWTPayloadTypes, UserTypes } from 'services/players/data-types';
+import { JWTPayloadTypes, UserTypes } from 'data-types';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify'
 
@@ -30,7 +30,7 @@ export default function Auth() {
     }
   }, [])
 
-  const onLogout = () => {
+  const onSignOut = () => {
     Cookies.remove('access_token')
     toast.success('Successfully sign out your account!')
     setTimeout(() => {
@@ -66,7 +66,7 @@ export default function Auth() {
                   <a className="dropdown-item text-lg color-palette-2">Account Settings</a>
                 </Link>
               </li>
-              <li onClick={onLogout}>
+              <li onClick={onSignOut}>
                 <button type='button' className="dropdown-item text-lg color-palette-2">Sign Out</button>
               </li>
           </ul>
