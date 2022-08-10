@@ -15,19 +15,4 @@ export default function Transactions() {
   )
 }
 
-// --> Logic SSR (Server Side Rendering)
-export const getServerSideProps = async ({ req }: GetServerSideProps) => {
-  const { access_token } = req.cookies
-  if(!access_token) {
-    return {
-      redirect: {
-        destination: '/sign-in',
-        permanent: false,
-      }
-    }
-  } else {  
-    return {
-      props: {}
-    }
-  }
-}
+
