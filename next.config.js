@@ -2,8 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: [
-      'pvpstore.herokuapp.com'
-    ]
-  }
+    domains: ["178.128.19.77"],
+  },
 };
